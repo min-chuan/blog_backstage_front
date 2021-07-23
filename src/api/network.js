@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 
 // 进行一些全局配置
-axios.defaults.baseURL = 'http://127.0.0.1:7001';
+// axios.defaults.baseURL = 'http://127.0.0.1:7001';
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true; // 让axios发送请求的时候带上cookie
 
