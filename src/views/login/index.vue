@@ -25,7 +25,7 @@
           >
             <i slot="prefix" class="el-icon-picture-outline el-input__icon"></i>
           </el-input>
-          <div class="qrcode"></div>
+          <image class="qrcode" src="" />
         </el-form-item>
         <el-form-item>
           <el-button style="width: 100%" type="primary">登录</el-button>

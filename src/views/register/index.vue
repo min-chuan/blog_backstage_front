@@ -2,7 +2,7 @@
   <div class="register">
     <div class="register-form">
       <h4 class="title">注册</h4>
-      <el-form ref="form">
+      <el-form ref="form" :model="userData">
         <el-form-item required>
           <el-input v-model="userData.username" placeholder="账号">
             <i slot="prefix" class="el-icon-user el-input__icon"></i>
@@ -29,7 +29,7 @@
 <script>
 import { mapActions } from 'vuex';
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
     return {
       userData: {
@@ -41,12 +41,12 @@ export default {
   methods: {
     ...mapActions('user', ['register']),
     handleRegister() {
-      this.register(this.userData).then(() => {
-        this.$refs.form.validate((valid) => {
-          if (valid) {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.register(this.userData).then(() => {
             this.$message.success('注册成功');
-          }
-        });
+          });
+        }
       });
     },
   },
