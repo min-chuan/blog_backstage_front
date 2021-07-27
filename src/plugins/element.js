@@ -31,6 +31,7 @@ import {
   Pagination,
   Dialog,
   Upload,
+  Scrollbar,
 } from 'element-ui';
 
 Vue.prototype.$message = Message;
@@ -62,3 +63,4 @@ Vue.use(Input);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Checkbox);
+Vue.use(Scrollbar);

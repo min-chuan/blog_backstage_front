@@ -2,9 +2,9 @@
   <div class="blog-edit">
     <!-- 标题 start -->
     <div class="title">
-      <div class="title-back">
+      <div class="title-back" @click="$router.go(-1)">
         <i class="el-icon-arrow-left"></i>
-        <span>文章管理</span>
+        <span>创作中心</span>
       </div>
       <div class="title-input">
         <el-input

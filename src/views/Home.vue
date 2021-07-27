@@ -1,8 +1,5 @@
 <template>
-  <div class="home">
-    Home
-    <el-button>点我</el-button>
-  </div>
+  <div class="home">Home</div>
 </template>
 <script>
 export default {

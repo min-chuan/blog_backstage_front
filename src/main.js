@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import MavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 import IconFont from '@/components/iconFont';
 
 import '@/plugins/element.js';

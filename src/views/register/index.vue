@@ -77,6 +77,7 @@ export default {
     line-height: 47px;
     background-color: #263542;
     border-color: #3c4956;
+    color: #bfc4cc;
     &:focus {
       border-color: #3c4956;
     }

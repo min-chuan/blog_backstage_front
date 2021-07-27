@@ -1,7 +1,9 @@
 import { login, register } from '@/api/user';
 
 const getDefaultState = () => {
-  return {};
+  return {
+    userInfo: JSON.parse(localStorage.getItem('userInfo')) || {},
+  };
 };
 
 const state = getDefaultState();
@@ -9,6 +11,10 @@ const state = getDefaultState();
 const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState());
+  },
+  SET_USER: (state, userInfo) => {
+    state.userInfo = userInfo;
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
   },
 };
 
@@ -28,6 +34,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login(data)
         .then((data) => {
+          commit('SET_USER', data);
           resolve(data);
         })
         .catch((error) => {

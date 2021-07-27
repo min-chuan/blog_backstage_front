@@ -1,30 +1,54 @@
 import axios from 'axios';
-import { Message } from 'element-ui';
+import store from '@/store';
+import { Message, Loading } from 'element-ui';
 
-// 进行一些全局配置
-// axios.defaults.baseURL = 'http://127.0.0.1:7001';
+/* 加载显示 */
+let requestNum = 0;
+let loadingInstance = null;
+
+const loadingAdd = () => {
+  requestNum++;
+  if (requestNum === 1) {
+    loadingInstance = Loading.service({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)',
+    });
+  }
+};
+
+const loadingSub = () => {
+  requestNum--;
+  if (requestNum === 0) {
+    loadingInstance.close();
+  }
+};
+
+/* axios全局配置 */
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true; // 让axios发送请求的时候带上cookie
 
-// 添加请求拦截器
+/* axios请求拦截 */
 axios.interceptors.request.use(
   function (config) {
-    // config.headers.Authorization = sessionStorage.getItem('token');
-    // 在发送请求之前做些什么
+    /* 在发送请求之前做些什么 */
+    loadingAdd();
     return config;
   },
   function (error) {
-    // 对请求错误做些什么
+    /* 对请求错误做些什么 */
     return Promise.reject(error);
   }
 );
 
-// 添加响应拦截器
+/* axios响应拦截 */
 axios.interceptors.response.use(
   function (response) {
-    // 对响应数据做点什么 (status: 2xx)
+    /* 对响应数据做点什么 (status: 2xx) */
+    loadingSub();
+    // 流文件处理
     if (response.headers['content-type'] === 'application/vnd.ms-excel') {
-      // 获取文件名称
       const filename = response.headers['content-disposition'].split('=')[1];
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(
@@ -40,7 +64,15 @@ axios.interceptors.response.use(
     return response.data;
   },
   function (error) {
-    // 对响应错误做点什么 (status: 除2xx)
+    /* 对响应错误做点什么 (status: 除2xx) */
+    loadingSub();
+    switch (error.response.status) {
+      case 401:
+        store.commit('app/CLEAR_DATA_AND_EXIT');
+        break;
+      default:
+        break;
+    }
     Message.error(error.response.data.message);
     return Promise.reject(error);
   }
