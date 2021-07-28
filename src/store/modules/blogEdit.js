@@ -1,4 +1,4 @@
-import { addTag, getTagList } from '@/api/tag';
+import { releaseArticle } from '@/api/blogEdit';
 
 const getDefaultState = () => {
   return {};
@@ -13,20 +13,9 @@ const mutations = {
 };
 
 const actions = {
-  getTagList({ commit }, data) {
+  releaseArticle({ commit }, data) {
     return new Promise((resolve, reject) => {
-      getTagList(data)
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
-  addTag({ commit }, data) {
-    return new Promise((resolve, reject) => {
-      addTag(data)
+      releaseArticle(data)
         .then((data) => {
           resolve(data);
         })

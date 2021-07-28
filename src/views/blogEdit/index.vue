@@ -72,53 +72,35 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import moment from 'moment';
 export default {
   name: 'BlogEdit',
   created() {
-    this.articleTitle = moment().format('YYYY-MM-DD');
+    this.getTagList().then((data) => {
+      this.tagList = data;
+    });
   },
   data() {
     return {
       articleData: {
-        title: '',
+        title: moment().format('YYYY-MM-DD'),
         content: '',
         tagIdList: [],
         abstract: '',
       },
-      // 'js', 'css', 'html', 'vue', 'react', 'node'
-      tagList: [
-        {
-          id: 1,
-          name: 'js',
-        },
-        {
-          id: 2,
-          name: 'css',
-        },
-        {
-          id: 3,
-          name: 'html',
-        },
-        {
-          id: 4,
-          name: 'vue',
-        },
-        {
-          id: 5,
-          name: 'react',
-        },
-        {
-          id: 6,
-          name: 'node',
-        },
-      ],
+      tagList: [],
       releaseArticleVisible: false,
     };
   },
   methods: {
+    ...mapActions('tag', ['getTagList']),
+    ...mapActions('blogEdit', ['releaseArticle']),
     handleOk() {
-      this.releaseArticleVisible = false;
+      this.releaseArticle(this.articleData).then(() => {
+        this.$message.success('发布成功');
+        this.releaseArticleVisible = false;
+      });
     },
   },
 };
